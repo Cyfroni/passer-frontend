@@ -3,8 +3,12 @@
     <div class="form-group md-4">
       <label for="inputState">Choose file</label>
       <select id="inputState" class="form-control" v-model="selectedFile">
-        <option v-for="(file, index) in files" v-bind:key="index">
-          {{ file }}
+        <option
+          v-for="file in files"
+          v-bind:value="file"
+          v-bind:key="file.hash"
+        >
+          {{ file.name }}
         </option>
       </select>
     </div>
@@ -15,15 +19,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+import fileDownload from 'js-file-download'
+
 export default {
   name: 'RetrieveForm',
   data() {
-    return { files: ['file1', 'file2'], selectedFile: '' }
+    return { files: [], selectedFile: {} }
   },
   methods: {
-    retrieveFile() {
-      console.log(this.selectedFile)
+    async retrieveFile() {
+      const res = await axios.post(
+        'http://localhost:8080/api/retrieveFile',
+        this.selectedFile
+      )
+      const data = res.data.data
+      fileDownload(data, this.selectedFile.name)
     }
+  },
+  async mounted() {
+    const response = await axios.get('http://localhost:8080/api/files')
+    this.files = response.data
   }
 }
 </script>

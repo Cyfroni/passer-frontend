@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'UploadForm',
   data() {
@@ -43,10 +45,18 @@ export default {
         vm.file = file
       }
 
-      reader.readAsDataURL(file)
+      reader.readAsText(file)
     },
-    storeFile() {
+    async storeFile() {
       console.log(this.data)
+      console.log(this.file)
+      const res = await axios.post('http://localhost:8080/api/uploadFile', {
+        name: this.file.name,
+        data: this.data
+      })
+      console.log(res)
+      this.file = ''
+      this.data = ''
     }
   },
   computed: {
