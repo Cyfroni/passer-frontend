@@ -9,12 +9,12 @@
           id="inputGroupFile01"
           aria-describedby="inputGroupFileAddon01"
         />
-        <label class="custom-file-label" for="inputGroupFile01">{{
-          text
-        }}</label>
+        <label class="custom-file-label" for="inputGroupFile01">
+          {{ text }}
+        </label>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" @click="storeFile">
+    <button type="button" class="btn btn-success" @click="storeFile">
       Upload
     </button>
   </div>
@@ -50,7 +50,7 @@ export default {
     async storeFile() {
       console.log(this.data)
       console.log(this.file)
-      const res = await axios.post('http://localhost:8080/api/uploadFile', {
+      const res = await axios.post('http://localhost:8030/api/uploadFile', {
         name: this.file.name,
         data: this.data
       })

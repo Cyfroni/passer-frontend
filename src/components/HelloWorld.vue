@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <p>{{ greetings }}</p>
+    <h2>{{ greetings }}</h2>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     return { greetings: '' }
   },
   async mounted() {
-    const response = await axios.get('http://localhost:8080/api/home')
+    const response = await axios.get('http://localhost:8030/api/home')
     this.greetings = response.data.greetings
   }
 }
